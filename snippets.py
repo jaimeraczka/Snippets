@@ -20,6 +20,14 @@ def make_parser():
                             help="The snippet filename")
     put_parser.set_defaults(command="put")
 
+    # Subparser for the get command
+    logging.debug("Constructing get subparser")
+    get_parser = subparsers.add_parser("get", help="Retrieve a snippet")
+    get_parser.add_argument("name", help="The name of the snippet")
+    get_parser.add_argument("filename", default="snippets.csv", nargs="?",
+                            help="The snippet filename")
+    get_parser.set_defaults(command="get")
+
     return parser
 
 
@@ -37,6 +45,21 @@ def put(name, snippet, filename):
     logging.debug("Write sucessful")
     return name, snippet
 
+def get(name, filename):
+    """ Retrieve a snippet with its associated name from the CSV file """
+    logging.info("Reading {} from {}".format(name, filename))
+    logging.debug("Opening file")
+    with open(filename, "a") as f:
+        reader = csv.read(f)
+        logging.debug("Reading snippet from file".format(name))
+
+        #Add error message here
+        #TODO: if name exists in file:
+            logging.debug("Read sucessful")
+            return snippet
+            # else return "Sorry, that snippet doesn't exist!"
+
+    
 
 def main():
     """ Main function """
